@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สุขสันต์วันเกิด!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'Kanit', sans-serif;
+      background: linear-gradient(to bottom, #FFD1DC, #FFC0CB);
+      text-align: center;
+      padding: 50px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('images/background.jpg');
+      background-size: cover;
+      opacity: 0.2;
+      z-index: -1;
+    }
+    .gift {
+      font-size: 100px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .gift:hover {
+      transform: scale(1.1);
+    }
+    .hidden {
+      display: none;
+    }
+    .greeting {
+      font-size: 24px;
+      color: #FF1493;
+      margin-top: 20px;
+    }
+    .decoration {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: spin 10s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .birthday-image {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 50px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s, transform 1s;
+    }
+    .birthday-image.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="gift" onclick="openGift()">🎁</div>
+  <div id="birthdayContent" class="hidden">
+    <h1>สุขสันต์วันเกิด!</h1>
+    <p class="greeting" id="greetingText"></p>
+    <img src="gg.jpg" alt="เจ้าของวันเกิด" class="birthday-image" id="birthdayImage">
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="son/hhh.MP3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const greetingText = "ขอให้วันพิเศษของต้าเต็มไปด้วยความสุข ความรัก และรอยยิ้ม ขอให้ความฝันทุกอย่างเป็นจริง และมีความสุขตลอดปีนี้และตลอดไป";
+    let index = 0;
+
+    function openGift() {
+      const gift = document.querySelector('.gift');
+      const birthdayContent = document.getElementById('birthdayContent');
+      gift.style.display = 'none';
+      birthdayContent.classList.remove('hidden');
+      document.getElementById('bgMusic').play();
+      typeGreeting();
+      addDecorations();
+    }
+
+    function typeGreeting() {
+      if (index < greetingText.length) {
+        document.getElementById('greetingText').innerHTML += greetingText.charAt(index);
+        index++;
+        setTimeout(typeGreeting, 100);
+      } else {
+        setTimeout(showBirthdayImage, 1000);
+      }
+    }
+
+    function showBirthdayImage() {
+      const birthdayImage = document.getElementById('birthdayImage');
+      birthdayImage.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        birthdayImage.classList.add('show');
+      }, 500);
+    }
+
+    function addDecorations() {
+      const decorations = [
+        'png-clipart-white-crocus-flowers-illustration-flower-white-flower-decor-flower-arranging-decoupage-removebg-preview.png',
+      ];
+      
+      for (let i = 0; i < 10; i++) {
+        const decoration = document.createElement('div');
+        decoration.className = 'decoration';
+        decoration.style.backgroundImage = `url(${decorations[0]})`;
+        decoration.style.left = Math.random() * 100 + 'vw';
+        decoration.style.top = Math.random() * 100 + 'vh';
+        document.body.appendChild(decoration);
+      }
+    }
+  </script>
+</body>
+</html>
